@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bo.bookdb.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.bo.bookdb.entity.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="role" jdbcType="BIGINT" property="role" />
+    <result column="landMark" jdbcType="VARCHAR" property="landmark" />
+    <result column="enterdate" jdbcType="DATE" property="enterdate" />
+    <result column="idcard" jdbcType="VARCHAR" property="idcard" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bo.bookdb.entity.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (userName, `password`, `name`, 
+      telephone, unit, `role`, 
+      landMark, enterdate, idcard
+      )
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{role,jdbcType=BIGINT}, 
+      #{landmark,jdbcType=VARCHAR}, #{enterdate,jdbcType=DATE}, #{idcard,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.bo.bookdb.entity.User">
+    update user
+    set userName = #{username,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      `role` = #{role,jdbcType=BIGINT},
+      landMark = #{landmark,jdbcType=VARCHAR},
+      enterdate = #{enterdate,jdbcType=DATE},
+      idcard = #{idcard,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, userName, `password`, `name`, telephone, unit, `role`, landMark, enterdate, 
+    idcard
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, userName, `password`, `name`, telephone, unit, `role`, landMark, enterdate, 
+    idcard
+    from user
+  </select>
+
+</mapper>
